@@ -25,7 +25,7 @@ module.exports = function(grunt) {
         };
 
     this.files.forEach(function(file) {
-      var src = file.src.filter(file_exist).map(grunt.file.read).map(function(data) {
+      var src = file.src.filter(file_exist).map(grunt.file.read).map(function(data, i) {
         var css_classname = '.',
             css_content = '{ background-image: url("data:image/{type};charset=utf-8;base64,{base64content}"); }',
             base64;
