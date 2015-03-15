@@ -9,6 +9,7 @@
 'use strict';
 
 var path = require('path');
+var fs = require("fs");
 
 module.exports = function(grunt) {
 
@@ -28,14 +29,36 @@ module.exports = function(grunt) {
       var src = file.src.filter(file_exist).map(grunt.file.read).map(function(data, i) {
         var css_classname = '.',
             css_content = '{ background-image: url("data:image/{type};charset=utf-8;base64,{base64content}"); }',
-            base64;
+            ext = path.extname(file.src[i]).toLowerCase().substr(1),
+            base64, type;
         if(options.prefix){
           css_classname += options.prefix + '-' + path.basename(file.src[i], path.extname(file.src[i]));
         } else {
           css_classname += path.basename(file.src[i], path.extname(file.src[i]));
         }
-        base64 = new Buffer(data).toString('base64');
-        return css_classname + css_content.replace('{base64content}', base64).replace('{type}', 'svg+xml');
+        if(ext === 'svg'){
+          base64 = new Buffer(data).toString('base64');
+        } else {
+          base64 = fs.readFileSync(file.src[i]).toString('base64');
+        }
+        switch (ext) {
+          case 'svg':
+            type = 'svg+xml';
+            break;
+          case 'jpeg':
+            type = 'jpeg';
+            break;
+          case 'jpg':
+            type = 'jpeg';
+            break;
+          case 'gif':
+            type = 'gif';
+            break;
+          case 'png':
+            type = 'png';
+            break;
+        }
+        return css_classname + css_content.replace('{base64content}', base64).replace('{type}', type);
       }).join('\n');
 
       grunt.file.write(file.dest, src);

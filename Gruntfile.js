@@ -30,20 +30,12 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     img2base64: {
-      default_options: {
+      main: {
         options: {
+          prefix: 'icon'
         },
         files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
-        }
-      },
-      custom_options: {
-        options: {
-          separator: ': ',
-          punctuation: ' !!!'
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
+          'tmp/icon.css': ['test/fixtures/*']
         }
       }
     },
