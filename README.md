@@ -39,22 +39,30 @@ grunt.initConfig({
 
 #### options.prefix
 Type: `String`
-Default value: `''`
+Default value: `'.'`
 
-Prefix for classname
+Prefix for selector
+
+#### options.postfix
+Type: `String`
+Default value: `'.'`
+
+Postfix for selector
 
 
 ### Usage Examples
 
 #### Default Options
-The generated result will be file `icons.css` contains rules like `.icon-filename {background-image:url(base64Url)}`
+The generated result will be file `icons.css` contains rules like `.icon-filename span { background-image:url
+(base64Url)}`
 
 ```js
 grunt.initConfig({
   img2base64: {
     main: {
       options: {
-        prefix: 'icon'
+        prefix: '.icon-',
+        postfix: ' span'
       },
       files: {
         'dest/css/icons.css': ['src/img/icons/*']
@@ -68,6 +76,9 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+
+#### 0.0.3
+  * Add `postfix` option 
 
 #### 0.0.2
   * Add support for PNG, JPG, GIF files 

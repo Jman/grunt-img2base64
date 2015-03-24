@@ -27,15 +27,13 @@ module.exports = function(grunt) {
 
     this.files.forEach(function(file) {
       var src = file.src.filter(file_exist).map(grunt.file.read).map(function(data, i) {
-        var css_classname = '.',
-            css_content = '{ background-image: url("data:image/{type};charset=utf-8;base64,{base64content}"); }',
+        var css_classname = '',
+            css_content = ' { background-image: url("data:image/{type};charset=utf-8;base64,{base64content}"); }',
             ext = path.extname(file.src[i]).toLowerCase().substr(1),
             base64, type;
-        if(options.prefix){
-          css_classname += options.prefix + '-' + path.basename(file.src[i], path.extname(file.src[i]));
-        } else {
-          css_classname += path.basename(file.src[i], path.extname(file.src[i]));
-        }
+        css_classname += options.prefix ? options.prefix : '.';
+        css_classname += path.basename(file.src[i], path.extname(file.src[i]));
+        css_classname += options.postfix ? options.postfix : '';
         if(ext === 'svg'){
           base64 = new Buffer(data).toString('base64');
         } else {

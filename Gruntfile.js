@@ -32,10 +32,32 @@ module.exports = function(grunt) {
     img2base64: {
       main: {
         options: {
-          prefix: 'icon'
+          prefix: '.icon-',
+          postfix: ' span'
         },
         files: {
-          'tmp/icon.css': ['test/fixtures/*']
+          'tmp/main.css': ['test/fixtures/*']
+        }
+      },
+      empty: {
+        files: {
+          'tmp/empty.css': ['test/fixtures/*']
+        }
+      },
+      prefix: {
+        options: {
+          prefix: '.icon-'
+        },
+        files: {
+          'tmp/prefix.css': ['test/fixtures/*']
+        }
+      },
+      postfix: {
+        options: {
+          postfix: ' span'
+        },
+        files: {
+          'tmp/postfix.css': ['test/fixtures/*']
         }
       }
     },

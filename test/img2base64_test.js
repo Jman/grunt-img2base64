@@ -2,26 +2,6 @@
 
 var grunt = require('grunt');
 
-/*
-  ======== A Handy Little Nodeunit Reference ========
-  https://github.com/caolan/nodeunit
-
-  Test methods:
-    test.expect(numAssertions)
-    test.done()
-  Test assertions:
-    test.ok(value, [message])
-    test.equal(actual, expected, [message])
-    test.notEqual(actual, expected, [message])
-    test.deepEqual(actual, expected, [message])
-    test.notDeepEqual(actual, expected, [message])
-    test.strictEqual(actual, expected, [message])
-    test.notStrictEqual(actual, expected, [message])
-    test.throws(block, [error], [message])
-    test.doesNotThrow(block, [error], [message])
-    test.ifError(value)
-*/
-
 exports.img2base64 = {
   setUp: function(done) {
     done();
@@ -29,9 +9,36 @@ exports.img2base64 = {
   main : function(test) {
     test.expect(1);
 
-    var actual = grunt.file.read('tmp/icon.css');
-    var expected = grunt.file.read('test/expected/icon.css');
-    test.equal(actual, expected, 'Generated styles need to be equal');
+    var actual = grunt.file.read('tmp/main.css');
+    var expected = grunt.file.read('test/expected/main.css');
+    test.equal(actual, expected, 'Generated file needs to be equal');
+
+    test.done();
+  },
+  empty : function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/empty.css');
+    var expected = grunt.file.read('test/expected/empty.css');
+    test.equal(actual, expected, 'Generated file needs to be equal');
+
+    test.done();
+  },
+  prefix : function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/prefix.css');
+    var expected = grunt.file.read('test/expected/prefix.css');
+    test.equal(actual, expected, 'Generated file needs to be equal');
+
+    test.done();
+  },
+  postfix : function(test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/postfix.css');
+    var expected = grunt.file.read('test/expected/postfix.css');
+    test.equal(actual, expected, 'Generated file needs to be equal');
 
     test.done();
   }
