@@ -45,7 +45,7 @@ Prefix for selector
 
 #### options.postfix
 Type: `String`
-Default value: `'.'`
+Default value: `''`
 
 Postfix for selector
 
@@ -53,8 +53,24 @@ Postfix for selector
 ### Usage Examples
 
 #### Default Options
-The generated result will be file `icons.css` contains rules like `.icon-filename span { background-image:url
-(base64Url)}`
+The generated result will be file `icons.css` 
+contains rules like `.filename { background-image:url(base64Url) }`
+
+```js
+grunt.initConfig({
+  img2base64: {
+    main: {
+      files: {
+        'dest/css/icons.css': ['src/img/icons/*']
+      }
+    }
+  },
+});
+```
+
+#### Define custom prefix and postfix
+The generated result will be file `icons.css` 
+contains rules like `.icon-filename span { background-image:url(base64Url) }`
 
 ```js
 grunt.initConfig({
