@@ -1,7 +1,7 @@
 {
   "name": "grunt-img2base64",
   "description": "Encode images to base64 and create css file",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "homepage": "https://github.com/jman/grunt-img2base64",
   "author": {
     "name": "Eugene Tereschenko",
@@ -37,5 +37,8 @@
   },
   "keywords": [
     "gruntplugin"
-  ]
+  ],
+  "dependencies": {
+    "image-size": "^0.3.5"
+  }
 }

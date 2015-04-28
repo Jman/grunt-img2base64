@@ -8,14 +8,28 @@
 
 'use strict';
 
-var path = require('path');
-var fs = require("fs");
+var path = require('path'),
+    fs = require("fs"),
+    imgSize = require('image-size'),
+    types = {
+      'svg' : 'svg+xml',
+      'jpeg' : 'jpeg',
+      'jpg' : 'jpeg',
+      'gif' : 'gif',
+      'png': 'png'
+    },
+    template = fs.readFileSync(path.resolve(__dirname, 'template.ejs')).toString();
 
 module.exports = function(grunt) {
 
+  grunt.template.addDelimiters('img2base64', '{{', '}}');
+
   grunt.registerMultiTask('img2base64', 'Encode images to base64 and create css file', function() {
 
-    var options = this.options(),
+    var options = this.options({
+          prefix : '.',
+          postfix : ''
+        }),
         file_exist = function(filepath){
           if (!grunt.file.exists(filepath)) {
             grunt.log.warn('Source file "' + filepath + '" not found.');
@@ -25,42 +39,27 @@ module.exports = function(grunt) {
           }
         };
 
-    this.files.forEach(function(file) {
-      var src = file.src.filter(file_exist).map(grunt.file.read).map(function(data, i) {
-        var css_classname = '',
-            css_content = ' { background-image: url("data:image/{type};charset=utf-8;base64,{base64content}"); }',
-            ext = path.extname(file.src[i]).toLowerCase().substr(1),
-            base64, type;
-        css_classname += options.prefix ? options.prefix : '.';
-        css_classname += path.basename(file.src[i], path.extname(file.src[i]));
-        css_classname += options.postfix ? options.postfix : '';
-        if(ext === 'svg'){
-          base64 = new Buffer(data).toString('base64');
-        } else {
-          base64 = fs.readFileSync(file.src[i]).toString('base64');
-        }
-        switch (ext) {
-          case 'svg':
-            type = 'svg+xml';
-            break;
-          case 'jpeg':
-            type = 'jpeg';
-            break;
-          case 'jpg':
-            type = 'jpeg';
-            break;
-          case 'gif':
-            type = 'gif';
-            break;
-          case 'png':
-            type = 'png';
-            break;
-        }
-        return css_classname + css_content.replace('{base64content}', base64).replace('{type}', type);
+    this.files.forEach(function(files) {
+      var src = files.src.filter(file_exist).map(function(file) {
+        var ext = path.extname(file).toLowerCase().substr(1),
+            buffer = fs.readFileSync(file),
+            dimensions = imgSize(buffer);
+        return grunt.template.process(template, {
+          data : {
+            prefix : options.prefix,
+            class_name : path.basename(file, path.extname(file)),
+            postfix : options.postfix,
+            base64 : buffer.toString('base64'),
+            width: dimensions.width,
+            height: dimensions.height,
+            type : types[ext]
+          },
+          delimiters: 'img2base64'
+        })
       }).join('\n');
 
-      grunt.file.write(file.dest, src);
-      grunt.log.writeln('File "' + file.dest + '" created.');
+      grunt.file.write(files.dest, src);
+      grunt.log.writeln('File "' + files.dest + '" created.');
 
     });
   });

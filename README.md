@@ -54,7 +54,7 @@ Postfix for selector
 
 #### Default Options
 The generated result will be file `icons.css` 
-contains rules like `.filename { background-image:url(base64Url) }`
+contains rules like `.filename { background-image:url(base64Url); width:imgWidth; height:imgHeight; }`
 
 ```js
 grunt.initConfig({
@@ -92,6 +92,9 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+
+#### 0.0.4
+  * Add image size support 
 
 #### 0.0.3
   * Add `postfix` option 
