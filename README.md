@@ -93,6 +93,9 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+#### 0.0.5
+  * Fix bug with wrong height
+
 #### 0.0.4
   * Add image size support 
 
