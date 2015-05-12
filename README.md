@@ -70,7 +70,7 @@ grunt.initConfig({
 
 #### Define custom prefix and postfix
 The generated result will be file `icons.css` 
-contains rules like `.icon-filename span { background-image:url(base64Url) }`
+contains rules like `.icon-filename span { background-image:url(base64Url); width:imgWidth; height:imgHeight; }`
 
 ```js
 grunt.initConfig({
@@ -93,8 +93,10 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
-#### 0.0.5
+#### 0.0.5.1
   * Fix bug with wrong height
+  * Fix README
+  * Add .npmignore
 
 #### 0.0.4
   * Add image size support 
